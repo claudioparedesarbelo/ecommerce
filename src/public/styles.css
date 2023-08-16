@@ -1,0 +1,47 @@
+#headerMain{
+display: flex;
+justify-content: space-between;
+border-bottom: solid gray 1px;
+ }
+
+#headerMain img{
+    width: 160px;
+}
+
+#myForm{
+    width: 80%;
+    margin-left: 30px;
+    margin-right: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2px 40px;
+    
+}
+
+#contenedorProductos{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+}
+
+#contenedorProductos div{
+    margin-right: 40px;
+    margin-bottom: 40px;
+}
+
+#tableRealProduct{
+    border: 1px solid;
+}
+
+#tableRealProduct tr td{
+    border: 1px solid;
+    padding: 7px;
+}
+
+#tbody{
+    border: 1px solid;
+}
+
+#tbody tr td{
+    border: 1px solid;
+}
