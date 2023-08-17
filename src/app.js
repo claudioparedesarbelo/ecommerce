@@ -29,7 +29,7 @@ app.use('/api/cart', cartRouter)
 const runServer = () => {
     const httpServer = app.listen(8080, () => console.log('Listening...'))
     const io = new Server(httpServer)
-
+    const socketServer = new Server(httpServer)
     io.on('connection', socket => {
         socket.on('new-product',async data => {
             const productManager = new productModel(data)
@@ -38,7 +38,15 @@ const runServer = () => {
             io.emit('reload-table', products)
         })
     })
+    socketServer.on('connection', socket => {
+        console.log('Nuevo cliente conectado')
+        socket.on('message', data => {
+            console.log(data)
+        })
+    })
+
 }
+
 
 const URL = "mongodb+srv://claudioparedes:Cabeza2$@cluster1.rimje8x.mongodb.net/?retryWrites=true&w=majority"
 
