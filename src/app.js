@@ -22,8 +22,8 @@ app.set('view engine', 'handlebars')
 
 app.use('/', viewsRouter)
 
-app.use('/api/products', productRouter)
 app.use('/api/cart', cartRouter)
+
 
 
 const runServer = () => {

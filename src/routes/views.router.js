@@ -31,4 +31,9 @@ router.post('/form-products', async (req, res) => {
     console.log(dataGenerated)
     res.redirect('/index/' + dataGenerated.name)
 })
+
+router.get('/messages', (req, res)=>{
+    res.render('chat')
+})
+
 export default router
