@@ -42,6 +42,7 @@ const runServer = () => {
         console.log('Nuevo cliente conectado')
         socket.on('message', data => {
             console.log(data)
+            socket.emit('message_one')
         })
     })
 
