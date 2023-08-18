@@ -38,11 +38,13 @@ const runServer = () => {
             io.emit('reload-table', products)
         })
     })
+    const messages = []
     socketServer.on('connection', socket => {
         console.log('Nuevo cliente conectado')
+        socket.on('new', user => console.log(`${user} se acaba de conectar`))
         socket.on('message', data => {
-            console.log(data)
-            socket.emit('message_one')
+            messages.push(data)
+            socket.emit('logs', messages)
         })
     })
 
