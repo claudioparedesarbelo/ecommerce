@@ -7,6 +7,7 @@ import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
 import __dirname from './utils.js'
 import productModel from './dao/mongoManager/models/product.model.js'
+import messageModel from './dao/mongoManager/models/message.model.js'
 
 const app = express()
 
@@ -38,12 +39,16 @@ const runServer = () => {
             io.emit('reload-table', products)
         })
     })
-    const messages = []
+    
     socketServer.on('connection', socket => {
         console.log('Nuevo cliente conectado')
         socket.on('new', user => console.log(`${user} se acaba de conectar`))
-        socket.on('message', data => {
+        socket.on('message', async data => {
+            const messageManager = new messageModel(data)
+            await messageManager.save()
+            const messages = await messageModel.find().lean().exec()
             messages.push(data)
+            console.log(messages)
             socket.emit('logs', messages)
         })
     })
