@@ -47,7 +47,6 @@ const runServer = () => {
                 await messageManager.save()
                 const messages = await messageModel.find().lean().exec()
                 messages.push(data)
-                console.log(messages)
                 socket.emit('logs', messages)
             })
     })
