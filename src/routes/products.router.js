@@ -32,8 +32,14 @@ router.post('/form-products', async (req, res) => {
     res.redirect('/index/' + dataGenerated.name)
 })
 
-router.get('/messages', (req, res)=>{
-    res.render('chat')
+router.get('/delete/:id', async (req, res) => {
+    const id = req.params.id
+    await productModel.deleteOne({ _id: id })
+    res.redirect('/products-realtime')
 })
+
+
+
+
 
 export default router

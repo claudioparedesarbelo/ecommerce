@@ -2,9 +2,10 @@ import express from 'express'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
 import mongoose from 'mongoose'
-import cartRouter from './routes/cart.router.js'
-import viewsRouter from './routes/views.router.js'
 import __dirname from './utils.js'
+import cartRouter from './routes/cart.router.js'
+import productsRouter from './routes/products.router.js'
+import messageRouter from './routes/messages.router.js'
 import productModel from './dao/mongoManager/models/product.model.js'
 import messageModel from './dao/mongoManager/models/message.model.js'
 
@@ -20,7 +21,9 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
-app.use('/', viewsRouter)
+app.use('/', productsRouter)
+
+app.use('/', messageRouter)
 
 app.use('/api/cart', cartRouter)
 
@@ -29,28 +32,27 @@ app.use('/api/cart', cartRouter)
 const runServer = () => {
     const httpServer = app.listen(8080, () => console.log('Listening...'))
     const io = new Server(httpServer)
-    const socketServer = new Server(httpServer)
+    
     io.on('connection', socket => {
         socket.on('new-product',async data => {
             const productManager = new productModel(data)
             await productManager.save()
             const products = await productModel.find().lean().exec()
             io.emit('reload-table', products)
-        })
+            })
+            console.log('Nuevo cliente conectado')
+            socket.on('new', user => console.log(`${user} se acaba de conectar`))
+            socket.on('message', async data => {
+                const messageManager = new messageModel(data)
+                await messageManager.save()
+                const messages = await messageModel.find().lean().exec()
+                messages.push(data)
+                console.log(messages)
+                socket.emit('logs', messages)
+            })
     })
     
-    socketServer.on('connection', socket => {
-        console.log('Nuevo cliente conectado')
-        socket.on('new', user => console.log(`${user} se acaba de conectar`))
-        socket.on('message', async data => {
-            const messageManager = new messageModel(data)
-            await messageManager.save()
-            const messages = await messageModel.find().lean().exec()
-            messages.push(data)
-            console.log(messages)
-            socket.emit('logs', messages)
-        })
-    })
+  
 
 }
 
