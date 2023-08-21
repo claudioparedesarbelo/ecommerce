@@ -28,8 +28,7 @@ router.post('/form-products', async (req, res) => {
     const data = req.body
     const dataGenerated = new productModel(data)
     await dataGenerated.save()
-    console.log(dataGenerated)
-    res.redirect('/index/' + dataGenerated.name)
+    res.redirect('index' + dataGenerated.name)
 })
 
 router.get('/delete/:id', async (req, res) => {
