@@ -23,7 +23,7 @@ app.set('view engine', 'handlebars')
 
 app.use('/', productsRouter)
 
-app.use('/', messageRouter)
+app.use('/messages', messageRouter)
 
 app.use('/api/cart', cartRouter)
 
@@ -47,6 +47,7 @@ const runServer = () => {
                 await messageManager.save()
                 const messages = await messageModel.find().lean().exec()
                 messages.push(data)
+                console.log(messages)
                 socket.emit('logs', messages)
             })
     })

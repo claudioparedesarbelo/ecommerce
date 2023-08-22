@@ -10,7 +10,6 @@ const productSchema = new mongoose.Schema({
     stock: {type: Number, require: true},
     thumbnails: {type: String, require: true},
     
-    
 })
 
 const productModel = mongoose.model(productCollection, productSchema)

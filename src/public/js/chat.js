@@ -41,7 +41,7 @@ chatbox.addEventListener('keyup', event => {
 
 socket.on('logs', data => {
     const divLogs = document.getElementById('logs')
-    
+    console.log(data)
     let messages = ''
 
     data.forEach(msn => {
