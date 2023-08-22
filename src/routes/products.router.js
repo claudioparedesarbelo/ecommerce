@@ -28,13 +28,20 @@ router.post('/form-products', async (req, res) => {
     const data = req.body
     const dataGenerated = new productModel(data)
     await dataGenerated.save()
-    res.redirect('index' + dataGenerated.name)
+    res.redirect('/')
 })
 
 router.get('/delete/:id', async (req, res) => {
     const id = req.params.id
     await productModel.deleteOne({ _id: id })
     res.redirect('/products-realtime')
+})
+
+router.get('/:id', async (req, res) => {
+    const id = req.params.id
+    const product = await productModel.findById(id)
+
+    res.render('one', product)
 })
 
 
