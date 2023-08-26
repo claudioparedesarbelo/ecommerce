@@ -18,21 +18,27 @@
           <a class="nav-link" href="/messages">Contact with Us</a>
         </li>
         </ul>
-        <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+        
     </div>
   </div>
 </nav>
 
 </header>
 
-<div class="card" style="width: 18rem;">
-  <img src="{{thumbnails}}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{marca}}</h5>
-    <p class="card-text">{{description}}</p>
-    <a href="#" class="btn btn-primary">Add to cart</a>
-  </div>
+
+<H2>Carrito</H2>
+<hr>
+<div id="contenedorCarrito"> 
+{{#each products}}
+          <div class="card" style="width: 18rem;">
+          <img src="{{this.thumbnails}}" class="card-img-top" alt="...">
+          <div class="card-body">
+          <h4 class="card-title">{{this.marca}}</h4>
+          <p class="card-text">{{this.description}}</p>
+          <p class="card-text">${{this.price}}</p>
+          <p class="card-text">Stock {{this.stock}}</p>
+          <a href="#" class="btn btn-primary">Add to cart</a>  
+          </div>
+</div>
+{{/each}}
 </div>

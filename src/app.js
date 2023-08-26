@@ -25,7 +25,7 @@ app.use('/', productsRouter)
 
 app.use('/messages', messageRouter)
 
-app.use('/api/cart', cartRouter)
+app.use('/cart', cartRouter)
 
 
 
@@ -36,6 +36,11 @@ const runServer = () => {
     io.on('connection', socket => {
         socket.on('new-product',async data => {
             const productManager = new productModel(data)
+            const products1 = await productModel.find().lean().exec()
+            const id =  products1.length
+            if (id == 0) {
+            productManager.id = 1
+            }else {( productManager.id = id + 1)};
             await productManager.save()
             const products = await productModel.find().lean().exec()
             io.emit('reload-table', products)
