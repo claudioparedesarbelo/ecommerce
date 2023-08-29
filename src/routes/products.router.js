@@ -48,7 +48,6 @@ router.get('/delete/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const marca = req.body.marca
-    console.log(marca)
     const product = await productModel.findOne({marca})
     res.render('one', product)
 })

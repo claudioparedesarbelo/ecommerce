@@ -3,12 +3,13 @@ import mongoose from "mongoose";
 const cartCollection = 'cart'
 
 const cartSchema = new mongoose.Schema({
-    products:
-        {
-        idProducto: {type: String},
-        quantity: {type: Number},
-        }
-    
+    id: {type: String},
+    products: {
+        type: [{
+            id: String,
+            quantity: Number
+        }]
+    }
     
 })
 
